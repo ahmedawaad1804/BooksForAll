@@ -1,0 +1,23 @@
+<% include ../layouts/header %>
+<p>This is editing existing book form</p>
+<form action="/admin/mainPage/<%= book._id%>/editBook" method="POST">
+    Book name:<br>
+    <input type="text" name="bookName" value =<%= book.bookName %> >
+    <br><br>
+    Category<br>
+    <select name="categorySelect">
+      <% categories.forEach( (category) => { %>
+      <option value=<%= category._id %>><%= category.categoryName%></option>
+      <% }) %>
+    </select>
+    <br><br>
+    Author name:<br>
+    <select name="authorSelect">
+      <% authors.forEach( (author) => { %>
+      <option value=<%= author._id %>><%= author.authorName.first %></option>
+      <% }) %>
+    </select>
+    <br><br>
+    <input type="submit" value="Submit">
+  </form> 
+  <% include ../layouts/footer %>

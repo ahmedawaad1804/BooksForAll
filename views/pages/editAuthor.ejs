@@ -1,0 +1,13 @@
+<% include ../layouts/header %>
+<p>This is new author form</p>
+<form action="/admin/mainPage/<%= author._id%>/editAuthor" method="POST">
+    First name:<br>
+    <input type="text" name="firstName" value=<%= author.authorName.first %>>
+    <br>Last name:<br>
+    <input type="text" name="lastName" value=<%= author.authorName.last %>>
+    <br>Date of Birth:<br>
+    <input type="date" name="dateOfBirth" value=<%= author.dateOfBirth%> >
+    <br>
+    <input type="submit" value="Submit">
+  </form> 
+  <% include ../layouts/footer %>

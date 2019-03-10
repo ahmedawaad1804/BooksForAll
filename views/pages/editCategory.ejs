@@ -1,0 +1,9 @@
+<% include ../layouts/header %>
+<p>This is new category form</p>
+<form action="/admin/mainPage/<%= category._id%>/editCategory" method="POST">
+    Category name:<br>
+    <input type="text" name="categoryName" value= <%= category.categoryName %>>
+    <br>
+    <input type="submit" value="Submit">
+  </form> 
+  <% include ../layouts/footer %>

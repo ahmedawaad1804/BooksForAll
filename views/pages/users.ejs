@@ -1,0 +1,33 @@
+<% include ../layouts/header %>
+<p>This is a user list</p>
+<button onclick="location.href = 'http://localhost:3000/users/new';">add new User</button>
+
+<table style="border: black solid 1px">
+    <th>
+        <td>id</td>
+        <td>name</td>
+        <td>age</td>
+        <td>options</td>
+    </th>
+    <% users.forEach( (user) => { %>
+        <tr>
+            <td>
+                <%=user._id %>
+            </td>
+            <td>
+                <%= user.name %>
+            </td>
+            <td>
+                <%= user.age %>
+            </td>
+            <td>
+               <button onclick="location.href = 'http://localhost:3000/users/<%= user._id %>/edit';">edit</button>
+            </td>
+            <td>
+                <button onclick="location.href = 'http://localhost:3000/users/<%= user._id %>/delete';">delete</button>
+            </td>
+        </tr>
+    <% }) %>
+    
+</table>
+<% include ../layouts/footer %>

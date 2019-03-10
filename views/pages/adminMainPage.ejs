@@ -1,0 +1,116 @@
+<% include ../layouts/header %>
+<div id="Category" class="tabcontent">
+    <h3>Category</h3>
+    <button onclick="location.href = 'http://localhost:3000/admin/mainPage/addCategory';">add new category</button>
+    <table style="width: 50%">
+        <tr >
+            <td >id</td>
+            <td >name</td>
+            <td >Actions</td>
+        </tr>
+        <% categories.forEach( (category) => { %>
+        <tr>
+            <td >
+                <%=category._id %>
+            </td>
+            <td>
+                <%= category.categoryName %>
+            </td>
+            <td>
+                <button onclick="location.href = 'http://localhost:3000/admin/mainPage/<%= category._id %>/editCategory';">edit</button>
+                <button onclick="location.href = 'http://localhost:3000/admin/mainPage/<%= category._id %>/deleteCategory';">delete</button>
+            </td>
+        </tr>
+        <% })%>
+    </table>
+</div>
+
+<div id="Author" class="tabcontent">
+    <h3>Author</h3>
+    <button onclick="location.href = 'http://localhost:3000/admin/mainPage/addAuthor';">add new author</button>
+    <table style="width: 50%">
+        <tr>
+            <td >id</td>
+            <td >name</td>
+            <td >date of Birth</td>
+            <td >Actions</td>
+        </tr>
+        <% authors.forEach( (author) => { %>
+        <tr>
+            <td>
+                <%=author._id %>
+            </td>
+            <td>
+                <%= author.authorName.first %>
+                <%= author.authorName.last %>
+            </td>
+            <td>
+                <%= author.dateOfBirth.toISOString().replace('-', '/').split('T')[0].replace('-', '/')%>
+            <td>
+                <button onclick="location.href = 'http://localhost:3000/admin/mainPage/<%= author._id %>/editAuthor';">edit</button>
+                <button onclick="location.href = 'http://localhost:3000/admin/mainPage/<%= author._id %>/deleteAuthor';">delete</button>
+            </td>
+            <% })%>
+
+        </tr>
+
+    </table>
+</div>
+
+</div>
+
+<div id="Book" class="tabcontent">
+    <h3>Book</h3>
+    <button onclick="location.href = 'http://localhost:3000/admin/mainPage/addBook';">add new Book</button>
+    <table style="border: black solid 1px">
+        <tr>
+        <td>id</td>
+        <td>Book Name</td>
+        <td>Author Name</td>
+        <td>Category name</td>
+        <td>options</td>
+        </tr>
+        <% books.forEach( (book) => { %>
+        <tr>
+            <td>
+                <%=book._id %>
+            </td>
+            <td>
+                <%= book.bookName %>
+            </td>
+            <td>
+                <%=book.authorId.authorName.first%>
+                <%=book.authorId.authorName.last%>
+            </td>
+            <td>
+                <%= book.categoryId.categoryName%>
+            </td>
+            <td>
+                <button onclick="location.href = 'http://localhost:3000/admin/mainPage/<%= book._id %>/editBook';">edit</button>
+                <button onclick="location.href = 'http://localhost:3000/admin/mainPage/<%= book._id %>/deleteBook';">delete</button>
+            </td>
+            <% })%>
+
+        </tr>
+
+    </table>
+</div>
+
+<script>
+    function openoption(evt, optionName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace("active", "");
+        }
+        document.getElementById(optionName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+</script>
+
+
+<% include ../layouts/footer %>

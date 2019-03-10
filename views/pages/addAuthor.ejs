@@ -1,0 +1,13 @@
+<% include ../layouts/header %>
+<p>This is new author form</p>
+<form action="/admin/mainPage/addAuthor" method="POST">
+    First name:<br>
+    <input type="text" name="firstName" placeholder="agatha">
+    <br>Last name:<br>
+    <input type="text" name="lastName" placeholder="Kristy">
+    <br>Date of Birth:<br>
+    <input type="date" name="dateOfBirth" >
+    <br>
+    <input type="submit" value="Submit">
+  </form> 
+  <% include ../layouts/footer %>
