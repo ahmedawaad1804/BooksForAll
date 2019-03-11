@@ -1,0 +1,8 @@
+sudo systemctl start mongod
+
+npm install express --save
+
+nodemon server
+
+$ npm install node-fetch --save
+

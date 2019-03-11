@@ -1,0 +1,55 @@
+<% include ../layouts/header %>
+<style>
+    body{
+        background-color: blanchedalmond
+    }
+   
+    td, th {
+      border: 1px solid #ddd;
+      padding: 8px;
+    }
+    
+    tr:nth-child(even){background-color: #f2f2f2;}
+    
+    tr:hover {background-color:beige;}
+    #nameField{
+    cursor: pointer;}
+    button {
+        padding: 8px;
+        border-radius: 12px;
+        cursor: pointer;
+        background-color:wheat;}
+    
+    </style>
+<h2>This is a user list</h2>
+<table style="width: 50%">
+    <tr style="border: black solid 2px">
+        <td style="border: black solid 2px">id</td>
+        <td style="border: black solid 2px">name</td>
+        <td style="border: black solid 2px"> Email</td>
+        <td style="border: rgb(3, 0, 0) solid 2px">Actions</td>
+        <button onclick="location.href ='http://localhost:4000/users/AddNew'" style="float: left;" >Add New</button>
+        
+    </tr>
+    <% users.forEach( (user) => { %>
+        <tr style="border: black solid 2px">
+            <td style="border: black solid 2px">
+                <%=user._id %>
+            </td>
+            <td id="nameField" onclick="location.href ='http://localhost:4000/users/<%=user.id%>/UserData'" style="border: black solid 2px">
+                <%= user.name %>
+            </td>
+            <td style="border: black solid 2px"> 
+                <%= user.email %>
+            </td>
+            <td style="border: black solid 2px">
+              
+            <button onclick="location.href ='http://localhost:4000/users/<%=user.id%>/delete'" >Delete</button>
+            <button onclick="location.href ='http://localhost:4000/users/<%=user.id%>/edit'" >Edit</button> 
+              
+            </td>
+        </tr>
+    <% }) %>
+    
+</table>
+<% include ../layouts/footer %>

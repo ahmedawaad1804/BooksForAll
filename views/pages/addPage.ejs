@@ -1,0 +1,10 @@
+<% include ../layouts/header %>
+<p>This is a user list</p>
+<form method="POST" action="http://localhost:3000/users">
+    <input type="text" name="name" id="username" placeholder="Enter Name...">
+    <input type="text" name="age" id="userage" placeholder="Enter Age...">
+    <input type="submit"  id="subBtn" >
+</form>
+<!-- <button  onclick="window.location.href='http://localhost:3000/list'">List</button> -->
+
+<% include ../layouts/footer %>
