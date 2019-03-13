@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <p>tet</p>
+    <a href="">fatna</a>
+    <script src="http://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
+
+    <script>
+        $(document).ready(function () {
+            const options = {
+      method: 'get',
+      headers: {
+        'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
+      }
+    }
+    const url = "/category"
+    let itemsArray = [];
+    
+    //const data = JSON.parse(localStorage.getItem('items'));
+
+    fetch(url, options)
+    .then(response => response.text())
+    .then(text => {
+          console.log(JSON.parse(text).categories)
+          $("a").attr("href",`/${JSON.parse(text).url}`);
+          itemsArray.push(text)
+          localStorage.setItem('items', (itemsArray));
+    })
+    .catch(function(error) {
+        if (error.name === 'AbortError') {
+      console.error('Fetch aborted')
+     } else {
+      console.error('Another error', error)
+    }
+  });   
+  })
+     
+
+    </script>
+</body>
+</html>
