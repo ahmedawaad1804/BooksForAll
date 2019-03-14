@@ -138,29 +138,32 @@
     <script src="http://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" crossorigin="anonymous"></script>
+   
     <script>
-        $(document).ready(function () {
-          $('[data-toggle="tooltip"]').tooltip();
-        const options = {
-          method: 'get',
-          headers: {
-            'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
-          }
+ $(document).ready(function () {
+     const options = {
+            method: 'get',
+            headers: {
+                'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
+            }
         }
+    const url = `/category/${localStorage.getItem('key')}`
     let cardContainer;
-
-  let createTaskCard = (task) => {
+    let createTaskCard = (task) => {
       let card = document.createElement('div');
       card.className = 'card  text-white  text-center';
       card.style="max-width: 15rem;height: 3rem;padding-bottom:3.5rem;margin-bottom:1rem;"
       let cardBody = document.createElement('div');
       cardBody.className = 'card-body';
-      let title = document.createElement('a');
-      title.innerText = task.categoryName;
-      title.className = 'card-title';
-      title.addEventListener("click", function(){
+      let bookName = document.createElement('a');
+      bookName.innerText = task.bookName;
+      bookName.className = 'card-title';
+      let authName = document.createElement('a');
+      authName.innerText = task.authName;
+      authName.className = 'card-body';
+      authName.addEventListener("click", function(){
     //  for (let index = 0; index < task.length; index++) {
-       let url = `/category/${task._id}`
+     /*  let url = `/category/${task._id}`
         fetch(url, options)
         .then(response => response.text())
         .then((text) => {
@@ -175,30 +178,31 @@
         } else {
           console.error('Another error', error)
         }
-      });
+      });*/
       //  }
       })
-      cardBody.appendChild(title);
+      cardBody.appendChild(authName);
+      cardBody.appendChild(bookName);
       card.appendChild(cardBody);
       cardContainer.appendChild(card);
       }
  
-const url = "/category/categoryjson"
-    let categories = [];
-    
 //progressive app
     fetch(url, options)
     .then(response => response.json())
     .then(categoryNames => {
-     console.log(categoryNames.categories[1].categoryName);
-     console.log(typeof categoryNames);
+       //   $("a").attr("href",`/${JSON.parse(text).url}`);
+        console.log(categoryNames);
+        console.log(categoryNames.bookObj.myBooks)
+
+   //  console.log(typeof categoryNames);
      let initListOfTasks = () => {
     if (cardContainer) {
         document.getElementById('card-container').replaceWith(cardContainer);
         return;
     }
     cardContainer = document.getElementById('card-container');
-      categoryNames.categories.forEach((task) => {
+      categoryNames.bookObj.myBooks.forEach((task) => {
           createTaskCard(task);
           console.log(task);
       });
@@ -212,11 +216,9 @@ const url = "/category/categoryjson"
       console.error('Another error', error)
     }
   });   
-})
+  })
+     
 
-      
     </script>
-  <!--<script src="js/adminLogin.js"></script>-->  
 </body>
-
 </html>
