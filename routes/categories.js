@@ -10,44 +10,58 @@ var path = require('path');
 //export PATH=$PATH:$HOME/Downloads/node-v10.15.2-linux-x64/bin
 
 
-router.get('/test', (req, res) => {
+//router.get('/test', (req, res) => {
    
-   res.sendfile('test.html',{root: path.join(__dirname,'../public')})
+ //  res.sendfile('test.html',{root: path.join(__dirname,'../public')})
 
- });
+ //});
  
-
+ router.get('/categoryhtml', (req, res) => {
+    Category.find({}, (err, categories) => {
+         if (!err) {
+           res.sendfile('categoryUser.html',{root: path.join(__dirname,'../public')})
+         }
+         else{
+             res.send("an error occured");
+         }
+     });
+ });
 //router.get('/', authenticate, (req, res) => {
-router.get('/', (req, res) => {
+router.get('/categoryjson', (req, res) => {
    Category.find({}, (err, categories) => {
         if (!err) {
-            res.json({
-                categories,
-                url:"categoryUser.html"
-            })
-           // res.send(categories);
-          //res.sendfile('categoryUser.html',{root: path.join(__dirname,'../public')})
+           res.json({
+               categories,
+           //     url:"categoryUser.html"
+           })
         }
         else{
             res.send("an error occured");
         }
     });
-   
 });
+router.get('/categoryhtml/:id', (req, res) => {
+    Category.find({}, (err, categories) => {
+         if (!err) {
+           res.sendfile('oneCategory.html',{root: path.join(__dirname,'../public')})
+         }
+         else{
+             res.send("an error occured");
+         }
+     });
+    
+ });
 
 //router.get('/:id', authenticate, (req, res) => {
 
 router.get('/:id', (req, res) => {
     const id = req.params.id;
     console.log(id);
-    console.log(id);
     Book.find({categoryId: id})
     .populate('categoryId')
     .populate('authorId')
     .exec(function (err, books) {
         if(!err) {
-            console.log(books[0]);
-            
             const allBooks = [];
             books.forEach(function (element) {
                 const book = {
@@ -65,10 +79,14 @@ router.get('/:id', (req, res) => {
                 catName : books[0].categoryId.categoryName,
                 myBooks : allBooks
             }
-            console.log(bookObj);
+            console.log(bookObj);      
+           console.log(books[0]);
+
             res.send({
                 bookObj,
+               // urlOneCategory:"oneCategory.html"
             });
+           
         }
         else {
             if (!res.headersSent) {
