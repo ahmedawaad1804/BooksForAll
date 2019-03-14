@@ -147,7 +147,15 @@
                 'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
             }
         }
-    const url = `/category/${localStorage.getItem('key')}`
+  //  const urlParams = window.location.pathname
+  //  const myParam = urlParams.get('id');    
+  var urlParams = window.location.href;
+  var page = urlParams.substring(urlParams.lastIndexOf('/') + 1);
+   console.log(urlParams);
+  console.log(page);
+     
+    const url = "/category/"+page
+   // const url =urlParams
     let cardContainer;
     let createTaskCard = (task) => {
       let card = document.createElement('div');
@@ -192,8 +200,8 @@
     .then(response => response.json())
     .then(categoryNames => {
        //   $("a").attr("href",`/${JSON.parse(text).url}`);
-        console.log(categoryNames);
-        console.log(categoryNames.bookObj.myBooks)
+      //  console.log(categoryNames);
+      //  console.log(categoryNames.bookObj.myBooks)
 
    //  console.log(typeof categoryNames);
      let initListOfTasks = () => {
@@ -204,7 +212,7 @@
     cardContainer = document.getElementById('card-container');
       categoryNames.bookObj.myBooks.forEach((task) => {
           createTaskCard(task);
-          console.log(task);
+         // console.log(task);
       });
      };
      initListOfTasks()

@@ -165,8 +165,8 @@
         .then(response => response.text())
         .then((text) => {
               title.href=`/category/categoryhtml/${task._id}`
-              localStorage.setItem('key', `${task._id}`);
-              console.log(`/category/${localStorage.getItem('key')}`);
+             // localStorage.setItem('key', `${task._id}`);
+           //   console.log(`/category/${localStorage.getItem('key')}`);
               
             })
         .catch(function(error) {
@@ -184,14 +184,12 @@
       }
  
 const url = "/category/categoryjson"
-    let categories = [];
-    
 //progressive app
     fetch(url, options)
     .then(response => response.json())
     .then(categoryNames => {
-     console.log(categoryNames.categories[1].categoryName);
-     console.log(typeof categoryNames);
+     //console.log(categoryNames.categories[1].categoryName);
+    // console.log(typeof categoryNames);
      let initListOfTasks = () => {
     if (cardContainer) {
         document.getElementById('card-container').replaceWith(cardContainer);
@@ -200,7 +198,7 @@ const url = "/category/categoryjson"
     cardContainer = document.getElementById('card-container');
       categoryNames.categories.forEach((task) => {
           createTaskCard(task);
-          console.log(task);
+        //  console.log(task);
       });
      };
      initListOfTasks()
