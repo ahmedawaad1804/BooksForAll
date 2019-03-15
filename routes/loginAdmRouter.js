@@ -100,13 +100,10 @@ router.get('/admBoard', function(req, res) {
       res.send(`Error: ${err}`);
     } else {
       res.sendfile('CategoryAdmin.html',{root: path.join(__dirname,'../public')})
-     // res.json({ 
-      //  hamada : req.session.users.email
-    //  });
-    //  res.send()
     }
   });
 });
+// this is new route we need add in works of nada File
 router.get('/category',/*auth,*/ (req, res) => {
 try {
     Category.find({},(err,categs)=>{
@@ -116,14 +113,18 @@ try {
        for (let index = 0; index < categs.length; index++) {
          catObj.id=categs[index]._id;
          catObj.categoryName=categs[index].categoryName;
-         catArr.push(catObj)
        }
-       res.send(catArr);
+       console.log(categs);
+       catArr.push(catObj)
+       res.send({
+        categs,
+        catArr
+       });
       } else {
         res.send("error happened")
       }
     })
-   } catch (error) {
+   } catch (err) {
      res.send("error happened")
    }
   
@@ -138,7 +139,7 @@ router.post('/category',async(req,res)=>{
   try {
     await category.save();
     res.send('catgory was saved');
-  } catch (error) {
+  } catch (err) {
     res.send("error happened")
   }
 })
@@ -156,7 +157,7 @@ router.post('/addAuthor',async (req, res) => {
       await author.save();
       //  res.redirect('/admin/mainPage');
       res.send('author was saved');
-    } catch (error) {
+    } catch (err) {
       res.send("error happened")
     }
 })
@@ -171,8 +172,8 @@ router.post('/addBook',async (req, res) => {
       await book.save();
       //  res.redirect('/admin/mainPage');
       res.send('book was saved');
-    } catch (error) {
-      res.send(error)
+    } catch (err) {
+      res.send(err)
     }
 })
 // cd /usr/local/bin/robomongo/bin ./robomongo
