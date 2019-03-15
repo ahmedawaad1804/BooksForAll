@@ -34,7 +34,7 @@
               </div>
               <ul class="navbar-nav flex-column mt-4">
                   <li class="nav-item">
-                      <a href="/Admin/adminBoard" class="nav-link text-white p-3 mb-2 sidebar-link">
+                      <a href="/Admin/admBoard" class="nav-link text-white p-3 mb-2 sidebar-link">
                           <i class="fas fa-table text-light fa-lg mr-3">  
                           </i>Categories
                       </a>
@@ -110,12 +110,12 @@
       
       <!-- Modal body -->
       <div class="modal-body">
-        <input type="text" class="form-control" placeholder="Category" name="Categories">
+        <input type="text" class="form-control" placeholder="Category" name="Categories" id="Categories">
       </div>
       
       <!-- Modal footer -->
       <div class="modal-footer">
-        <button type="button" class="btn btn-success" data-dismiss="modal">Add</button>
+        <button type="button" class="btn btn-success" data-dismiss="modal" id="addCategory">Add</button>
         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
       </div>
       
@@ -146,27 +146,7 @@
                             <th>Action</th>
                          </tr>
                        </thead>
-                       <tbody>
-                         <tr>
-                           <th></th>
-                           <th></th>
-                           <th> 
-                              <a href="#" data-toggle="tooltip" 
-                              title="edit" data-html="true" data-placement="top"> 
-                                <i class="fas fa-edit fa-lg text-success mr-2"></i>
-                              </a>
-                              <a href="#" data-toggle="tooltip" 
-                              title="delete" data-html="true" data-placement="top"> 
-                                <i class="fas fa-trash-alt fa-lg text-danger mr-2"></i>
-                              </a>
-                           </th>
-                         </tr>
-                         <tr>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                          
-                          </tr>
+                       <tbody id="tbody">
                        </tbody>
                    </table>
                    <!--pagination-->
@@ -214,38 +194,106 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" crossorigin="anonymous"></script>
     <script>
+       const url = "/Admin/category"
         $(document).ready(function () {
-          $('[data-toggle="tooltip"]').tooltip();
-         /* $.ajax({
-        url: "/Admin/category",
-        contentType:'application/json',
-        method:"GET",
-    success: function(result){
-        $("#test").text = JSON.stringify(result)
-        console.log(result[0].categoryName);
-    },error:function(error){
-        console.log(error);      
-    }
-    
-    });*/
-    const options = {
-      method: 'get',
-      headers: {
-        'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
-      }
-   }
-    const url = "/Admin/category"
-    fetch(url, options)
-    .then(response => response.text())
-    .then(text => console.log(text))
-    if (err.name === 'AbortError') {
-      console.error('Fetch aborted')
-    } else {
-      console.error('Another error', err)
-    }
+            let tbodyContainer;
+          let createTaskTable = (task) => {
+              let row = document.createElement('tr');
+              let rowID = document.createElement('th');
+              let rowCatgName = document.createElement('th');
+              let rowEditRemove = document.createElement('th');
+              let editAn = document.createElement('a');
+              let editi = document.createElement('i');
+              editi.className="fas fa-edit fa-lg text-success mr-2"
+              let removeAn = document.createElement('a');
+              let removei = document.createElement('i');
+              removei.className="fas fa-trash-alt fa-lg text-danger mr-2"
+              rowCatgName.innerText = task.categoryName;
+              editAn.title="edit"
+              removei.title="remove"
 
-  })
+              editAn.addEventListener("click", function(){
+                    /// code edit
+                    console.log("fatma");
+                    
+              })
+              removeAn.addEventListener("click", function(){
+                    /// code remove
+                    
+              })
+              editAn.appendChild(editi)
+              removeAn.appendChild(removei)
+
+              rowEditRemove.appendChild(editAn);
+              rowEditRemove.appendChild(removeAn);
+
+              row.appendChild(rowID);
+              row.appendChild(rowCatgName)
+              row.appendChild(rowEditRemove);
+
+              tbodyContainer.appendChild(row);
+          }
+
+        const options = {
+          method: 'get',
+          headers: {
+            'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
+          }
+      }
+        fetch(url, options)
+        .then(response => response.json())
+        .then(text => {
+          console.log(text)
+           let initListOfTasks = () => {
+              if (tbodyContainer) {
+                  document.getElementById('tbody').replaceWith(tbodyContainer);
+                  return;
+              }
+              tbodyContainer = document.getElementById('tbody');
+              text.categs.forEach((task) => {
+                createTaskTable(task);
+                });
+              };
+         initListOfTasks()
+        })
+          .catch(function(error) {
+              if (error.name === 'AbortError') {
+            console.error('Fetch aborted')
+          } else {
+            console.error('Another error', error)
+          }
         
+          });
+
+       const addCategory = document.getElementById("addCategory")
+   addCategory.addEventListener("click", function(){
+         let valueCat=document.getElementById("Categories").value
+        const urlPost="/admin/category"
+        const optionsPost = {
+          method: "POST", // *GET, POST, PUT, DELETE, etc.
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+           body: JSON.stringify({
+          categoryName: valueCat
+         })
+       }
+       fetch(urlPost, optionsPost)
+       .then(function(response) {
+          return response.text();
+        })
+        .then(function(myJson) {
+         console.log(JSON.stringify(myJson));
+         var cat={
+          categoryName: valueCat
+         }
+        createTaskTable(cat)
+        });
+       console.log( document.getElementById("Categories").value);
+     })
+    })
+    
     </script>
   <!--<script src="js/adminLogin.js"></script>-->  
 </body>
