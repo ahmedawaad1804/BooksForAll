@@ -123,18 +123,22 @@
   </div>
 </div>
 <!--end of model-->
- <div class="container-fluid">
+<div class="container-fluid">
     <div class="row">
-        <div class=" col-xl-10 col-lg-9  col-md-8 ml-auto">
+        <div class=" col-xl-10 col-lg-9  col-md-4 ml-auto">
             <div class="row pt-5 mt-3 mb-5">
-               <div class="col-xl-3 col-sm-6 p-2" id="card-container">
+                <div class="col-xl-12 col-sm-12 p-2" >
+                 <div class=" card-columns" id="card-container">
+
                  </div>
             </div>
         </div>
     </div>
 </div>
+</div>
 <!--<a id="test" class="text-center" href="">fat</a>-->
       </div>
+   
     <script src="http://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" crossorigin="anonymous"></script>
@@ -149,57 +153,48 @@
         }
   //  const urlParams = window.location.pathname
   //  const myParam = urlParams.get('id');    
-  var urlParams = window.location.href;
-  var page = urlParams.substring(urlParams.lastIndexOf('/') + 1);
+   var urlParams = window.location.href;
+   var page = urlParams.substring(urlParams.lastIndexOf('/') + 1);
    console.log(urlParams);
-  console.log(page);
+   console.log(page);
      
     const url = "/category/"+page
    // const url =urlParams
     let cardContainer;
-    let createTaskCard = (task) => {
-      let card = document.createElement('div');
-      card.className = 'card  text-white  text-center';
-      card.style="max-width: 15rem;height: 3rem;padding-bottom:3.5rem;margin-bottom:1rem;"
-      let cardBody = document.createElement('div');
-      cardBody.className = 'card-body';
-      let bookName = document.createElement('a');
-      bookName.innerText = task.bookName;
-      bookName.className = 'card-title';
-      let authName = document.createElement('a');
-      authName.innerText = task.authName;
-      authName.className = 'card-body';
-      authName.addEventListener("click", function(){
-    //  for (let index = 0; index < task.length; index++) {
-     /*  let url = `/category/${task._id}`
-        fetch(url, options)
-        .then(response => response.text())
-        .then((text) => {
-              title.href=`/category/categoryhtml/${task._id}`
-              localStorage.setItem('key', `${task._id}`);
-              console.log(`/category/${localStorage.getItem('key')}`);
-              
-            })
-        .catch(function(error) {
-            if (error.name === 'AbortError') {
-          console.error('Fetch aborted')
-        } else {
-          console.error('Another error', error)
-        }
-      });*/
-      //  }
-      })
-      cardBody.appendChild(authName);
-      cardBody.appendChild(bookName);
-      card.appendChild(cardBody);
-      cardContainer.appendChild(card);
+    class createTaskCard {
+      constructor(task) {
+          this.card = document.createElement('div');
+          this.card.className = 'card  text-white  text-center';
+          this.card.style="max-width: 15rem;height: 3rem;padding-bottom:3.5rem;margin-bottom:1rem;"
+          this.cardBody = document.createElement('div');
+          this.cardBody.className = 'card-body';
+          this.bookName = document.createElement('a');
+          this.bookName.innerText = task.bookName;
+          this.bookName.className = 'card-title';
+          this.bookName.addEventListener("click", function(){
+                /// code ahmed to change page 
+                //book
+                console.log(task.bookName)
+          })
+          this.authName = document.createElement('a');
+          this.authName.innerText = task.authName;
+          this.authName.className = 'card-body';
+          this.authName.addEventListener("click", function(){
+                /// code ahmed to change page
+                //auth
+                console.log(task.authName);
+                
+          })
+          this.cardBody.appendChild(this.authName);
+          this.cardBody.appendChild(this.bookName);
+          this.card.appendChild(this.cardBody);
+          cardContainer.appendChild(this.card);
       }
- 
+    }
 //progressive app
     fetch(url, options)
     .then(response => response.json())
     .then(categoryNames => {
-       //   $("a").attr("href",`/${JSON.parse(text).url}`);
       //  console.log(categoryNames);
       //  console.log(categoryNames.bookObj.myBooks)
 
@@ -211,7 +206,7 @@
     }
     cardContainer = document.getElementById('card-container');
       categoryNames.bookObj.myBooks.forEach((task) => {
-          createTaskCard(task);
+         new createTaskCard(task);
          // console.log(task);
       });
      };

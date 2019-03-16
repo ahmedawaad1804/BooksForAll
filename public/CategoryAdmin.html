@@ -197,43 +197,46 @@
        const url = "/Admin/category"
         $(document).ready(function () {
             let tbodyContainer;
-          let createTaskTable = (task) => {
-              let row = document.createElement('tr');
-              let rowID = document.createElement('th');
-              let rowCatgName = document.createElement('th');
-              let rowEditRemove = document.createElement('th');
-              let editAn = document.createElement('a');
-              let editi = document.createElement('i');
-              editi.className="fas fa-edit fa-lg text-success mr-2"
-              let removeAn = document.createElement('a');
-              let removei = document.createElement('i');
-              removei.className="fas fa-trash-alt fa-lg text-danger mr-2"
-              rowCatgName.innerText = task.categoryName;
-              editAn.title="edit"
-              removei.title="remove"
+       class createTaskTable {
+          constructor(task) {
+              this.row = document.createElement('tr');
+              this.rowID = document.createElement('th');
+              this.rowCatgName = document.createElement('th');
+              this.rowEditRemove = document.createElement('th');
+              this.editAn = document.createElement('a');
+              this.editi = document.createElement('i');
+              this.editi.className="fas fa-edit fa-lg text-success mr-2"
+              this.removeAn = document.createElement('a');
+              this.removei = document.createElement('i');
+              this.removei.className="fas fa-trash-alt fa-lg text-danger mr-2"
+              this.rowCatgName.innerText = task.categoryName;
+              this.editAn.title="edit"
+              this.removei.title="remove"
 
-              editAn.addEventListener("click", function(){
+              this.editAn.addEventListener("click", function(){
                     /// code edit
-                    console.log("fatma");
                     
+                    this.dataset.toggle="model"
+                    this.dataset.target = "#myModalCategories";
+                    console.log(task.categoryName);
               })
-              removeAn.addEventListener("click", function(){
+              this.removeAn.addEventListener("click", function(){
                     /// code remove
                     
               })
-              editAn.appendChild(editi)
-              removeAn.appendChild(removei)
+              this.editAn.appendChild(this.editi)
+              this.removeAn.appendChild(this.removei)
 
-              rowEditRemove.appendChild(editAn);
-              rowEditRemove.appendChild(removeAn);
+              this.rowEditRemove.appendChild(this.editAn);
+              this.rowEditRemove.appendChild(this.removeAn);
 
-              row.appendChild(rowID);
-              row.appendChild(rowCatgName)
-              row.appendChild(rowEditRemove);
+              this.row.appendChild(this.rowID);
+              this.row.appendChild(this.rowCatgName)
+              this.row.appendChild(this.rowEditRemove);
 
-              tbodyContainer.appendChild(row);
+              tbodyContainer.appendChild(this.row);
           }
-
+        }
         const options = {
           method: 'get',
           headers: {
@@ -251,7 +254,7 @@
               }
               tbodyContainer = document.getElementById('tbody');
               text.categs.forEach((task) => {
-                createTaskTable(task);
+               new createTaskTable(task);
                 });
               };
          initListOfTasks()
@@ -288,7 +291,7 @@
          var cat={
           categoryName: valueCat
          }
-        createTaskTable(cat)
+        new createTaskTable(cat)
         });
        console.log( document.getElementById("Categories").value);
      })

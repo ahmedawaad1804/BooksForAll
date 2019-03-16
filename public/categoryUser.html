@@ -123,15 +123,18 @@
   </div>
 </div>
 <!--end of model-->
- <div class="container-fluid">
+<div class="container-fluid">
     <div class="row">
-        <div class=" col-xl-10 col-lg-9  col-md-8 ml-auto">
+        <div class=" col-xl-10 col-lg-9  col-md-4 ml-auto">
             <div class="row pt-5 mt-3 mb-5">
-               <div class="col-xl-3 col-sm-6 p-2" id="card-container">
+                <div class="col-xl-12 col-sm-12 p-2" >
+                 <div class=" card-columns" id="card-container">
+
                  </div>
             </div>
         </div>
     </div>
+</div>
 </div>
 <!--<a id="test" class="text-center" href="">fat</a>-->
       </div>
@@ -148,26 +151,25 @@
           }
         }
     let cardContainer;
-
-  let createTaskCard = (task) => {
-      let card = document.createElement('div');
-      card.className = 'card  text-white  text-center';
-      card.style="max-width: 15rem;height: 3rem;padding-bottom:3.5rem;margin-bottom:1rem;"
-      let cardBody = document.createElement('div');
-      cardBody.className = 'card-body';
-      let title = document.createElement('a');
-      title.innerText = task.categoryName;
-      title.className = 'card-title';
-      title.addEventListener("click", function(){
-    //  for (let index = 0; index < task.length; index++) {
+  class createTaskCard {
+      constructor(task) {
+      this.card = document.createElement('div');
+      this.card.className = 'card  text-white  text-center';
+      this.card.style="height: 3rem;padding-bottom:3.5rem;margin-bottom:1rem;"
+      this.cardBody = document.createElement('div');
+      this.cardBody.className = 'card-body';
+      this.title = document.createElement('a');
+      this.title.innerText = task.categoryName;
+      this.title.className = 'card-title';
+      this.title.addEventListener("click", function(){
        let url = `/category/${task._id}`
         fetch(url, options)
-        .then(response => response.text())
+        .then(response => response.json())
         .then((text) => {
-              title.href=`/category/categoryhtml/${task._id}`
-             // localStorage.setItem('key', `${task._id}`);
-           //   console.log(`/category/${localStorage.getItem('key')}`);
-              
+          console.log(text.bookObj.myBooks[0].categoryId);
+          console.log(`${task._id}`);
+           // this.setAttribute('href',`/category/categoryhtml/${task._id}`)
+           this.href=`/category/categoryhtml/${task._id}`
             })
         .catch(function(error) {
             if (error.name === 'AbortError') {
@@ -176,13 +178,12 @@
           console.error('Another error', error)
         }
       });
-      //  }
       })
-      cardBody.appendChild(title);
-      card.appendChild(cardBody);
-      cardContainer.appendChild(card);
+      this.cardBody.appendChild(this.title);
+      this.card.appendChild(this.cardBody);
+      cardContainer.appendChild(this.card);
       }
- 
+    }
 const url = "/category/categoryjson"
 //progressive app
     fetch(url, options)
@@ -197,7 +198,7 @@ const url = "/category/categoryjson"
     }
     cardContainer = document.getElementById('card-container');
       categoryNames.categories.forEach((task) => {
-          createTaskCard(task);
+        new  createTaskCard(task);
         //  console.log(task);
       });
      };
