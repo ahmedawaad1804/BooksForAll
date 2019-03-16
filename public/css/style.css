@@ -17,7 +17,7 @@ align-content: center;
 height: 300px;
 margin-top: auto;
 margin-bottom: auto;
-width: 400px;
+width: 800px;
 background-color: rgba(0,0,0,0.5) !important;
 }
 
@@ -136,5 +136,25 @@ background-color: white;
     box-shadow: 2px 3px 15px #999;
     transform: translateY(-1px)
   }
+  @media (min-width: 576px){
+.card-columns {
+    -webkit-column-count: 4;
+    -moz-column-count: 3;
+    column-count: 2    ;
+    -webkit-column-gap: 1.25rem;
+    -moz-column-gap: 1.25rem;
+    column-gap: 1.25rem;
+  }
+}
+  @media(max-width:768px){
+    .card-columns {
+        -webkit-column-count: 4;
+        -moz-column-count: 3;
+        column-count: 2    ;
+        -webkit-column-gap: 1.25rem;
+        -moz-column-gap: 1.25rem;
+        column-gap: 1.25rem;
+      }
+}
  /*end of cards*/
  /*end of dashboard*/
